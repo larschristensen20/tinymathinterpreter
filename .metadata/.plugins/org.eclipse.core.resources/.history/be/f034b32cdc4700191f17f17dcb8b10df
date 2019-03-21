@@ -1,0 +1,9 @@
+grammar sdu.mmmi.mdsd.MathInterpreter with org.eclipse.xtext.common.Terminals
+
+generate mathInterpreter "http://www.mmmi.sdu/mdsd/MathInterpreter"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

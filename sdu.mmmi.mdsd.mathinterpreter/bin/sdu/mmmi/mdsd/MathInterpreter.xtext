@@ -1,0 +1,34 @@
+grammar sdu.mmmi.mdsd.MathInterpreter with org.eclipse.xtext.common.Terminals
+
+generate mathInterpreter "http://www.mmmi.sdu/mdsd/MathInterpreter"
+
+MathExp:
+	'exp' exp=Exp
+;
+
+Exp:
+	PlusOrMinus
+;
+
+Atomic returns Exp:
+	{Number} value=INT
+;
+
+Primary returns Exp:
+	'(' Exp ')' |
+	Atomic
+;
+
+PlusOrMinus returns Exp:
+	MultOrDiv (
+		({Plus.left=current} op='+' | {Minus.left=current} op='-') 
+			right=MultOrDiv
+		)*
+;
+
+MultOrDiv returns Exp:
+	Primary (
+		({Mult.left=current} op='*' | {Div.left=current} op='/') 
+			right=Primary
+		)*
+;
